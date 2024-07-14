@@ -1,3 +1,4 @@
+# Local targets
 APP = SummingMicroservice
 BIN_LINUX = ./bin/$(APP)
 CMD_SRC = ./cmd/$(APP)/main.go
@@ -11,3 +12,12 @@ run: build
 clean:
 	go mod tidy
 	rm -rf ./bin/
+
+# Docker-specific targets
+TAG = localhost/summingmicroservice/dev
+
+local-docker-build:
+	docker build -t $(TAG) .
+
+local-docker-run:
+	docker run --rm $(TAG)

@@ -28,6 +28,8 @@ func main() {
 func runService() {
 	fullAddress := fmt.Sprintf("%s:%d", address, port)
 
+	fmt.Printf("\nServer is running on %s", fullAddress)
+
 	http.HandleFunc("/sum", handlers.MyHandler)
 	http.ListenAndServe(fullAddress, nil)
 }
