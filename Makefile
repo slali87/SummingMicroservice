@@ -14,10 +14,34 @@ clean:
 	rm -rf ./bin/
 
 # Docker-specific targets
-TAG = localhost/summingmicroservice/dev
+APP_LOWER_CASE = $(shell echo $(APP) | tr A-Z a-z)
+TAG = localhost/$(APP_LOWER_CASE):dev
 
 local-docker-build:
 	docker build -t $(TAG) .
 
 local-docker-run:
 	docker run --rm $(TAG)
+
+# GCloud-specific targets
+TAG_GCLOUD = gcr.io/$(GCP_PROJECT_ID)/$(APP_LOWER_CASE):$(ENVIRONMENT)
+
+gcloud-docker-init:
+	gcloud auth configure-docker
+
+gcloud-docker-build:
+	docker build -t $(TAG_GCLOUD) .
+
+gcloud-docker-push:
+	docker push $(TAG_GCLOUD)
+
+gcloud-run-deploy:
+	gcloud run deploy $(APP_LOWER_CASE)-$(ENVIRONMENT) \
+	--region europe-central2 \
+	--image $(TAG_GCLOUD) \
+	--port 80 \
+	--project $(GCP_PROJECT_ID) \
+	--max-instances 1 \
+	--platform managed \
+	--labels environment=$(ENVIRONMENT) \
+	--allow-unauthenticated
