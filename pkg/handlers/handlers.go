@@ -9,7 +9,7 @@ import (
 
 func MyHandler(response http.ResponseWriter, request *http.Request) {
 	result := getSum(request)
-	fmt.Fprintf(response, "Hello dear visitor! The sum is: %v", result)
+	fmt.Fprintf(response, "Dear visitor! The sum is: %v", result)
 
 }
 
