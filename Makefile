@@ -21,7 +21,7 @@ local-docker-build:
 	docker build -t $(TAG) .
 
 local-docker-run:
-	docker run --rm $(TAG)
+	docker run --rm -p 8081:80 $(TAG)
 
 # GCloud-specific targets
 TAG_GCLOUD = gcr.io/$(GCP_PROJECT_ID)/$(APP_LOWER_CASE):$(ENVIRONMENT)
