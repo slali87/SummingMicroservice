@@ -29,6 +29,10 @@ func runService() {
 	fullAddress := fmt.Sprintf("%s:%d", address, port)
 
 	fmt.Printf("\nServer is running on %s", fullAddress)
+	
+	// Add index.html file as GUI
+	fileserver := http.FileServer(http.Dir("./html"))
+	http.Handle("/", fileserver)
 
 	http.HandleFunc("/sum", handlers.MyHandler)
 	http.ListenAndServe(fullAddress, nil)
