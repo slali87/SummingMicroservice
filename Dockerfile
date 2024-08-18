@@ -12,6 +12,7 @@ RUN make build
 FROM alpine
 WORKDIR / 
 COPY --from=builder /app/bin/SummingMicroservice .
+COPY --from=builder /app/html/ ./html/
 
 # 2.2 Run the binary
 ENTRYPOINT ["./SummingMicroservice"]
